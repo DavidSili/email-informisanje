@@ -82,17 +82,17 @@ $datum7= date('Y-m-d',mktime(0, 0, 0, date("m")  , date("d")-1, date("Y")));
 	if ($servis==7) $sql.=" AND posserv<'$datum7'";
 	
 	$xsql=$sql;
-    $result=mysql_query($sql);
-    $num=mysql_num_rows($result);
+	$result = mysqli_query($mysqli,$sql);
+    $num=$result->num_rows;
     $puta=ceil($num / $broj);
     for ($i = 1; $i <= $puta; $i++) {
-     	if ($i==1) $result=mysql_query($xsql.' LIMIT '.$broj);
+     	if ($i==1) $result=mysqli_query($mysqli,$xsql.' LIMIT '.$broj);
     	elseif ($i>1) {
     	$od=($i-1)*$broj+1;
-    	$result=mysql_query($xsql.' LIMIT '.$od.', '.$broj);
+    	$result=mysqli_query($mysqli,$xsql.' LIMIT '.$od.', '.$broj);
     	}
    	${'ids'.$i}="";
-        while($row=mysql_fetch_assoc($result)) {
+        while($row=$result->fetch_assoc()) {
             ${'ids'.$i}.='`idkomp`='.$row['idkomp'].' OR ';
         }
 		${'ids'.$i}=substr(${'ids'.$i}, 0, -4);
@@ -101,15 +101,15 @@ $danas=date('Y-m-d');
 switch ($posao) {
 	case "komercijalista":
 		$sql="UPDATE abook SET `pemdat`='$danas' WHERE ".${'ids'.$posebno};
-		mysql_query($sql) or die (mysql_error());
+		mysqli_query($mysqli,$sql) or die;
 		break;
 	case "serviser":
 		$sql="UPDATE abook SET `spem`='$danas' WHERE ".${'ids'.$posebno};
-		mysql_query($sql) or die (mysql_error());
+		mysqli_query($mysqli,$sql) or die;
 		break;
 	case "led":
 		$sql="UPDATE abook SET `lmail`='$danas' WHERE ".${'ids'.$posebno};
-		mysql_query($sql) or die (mysql_error());
+		mysqli_query($mysqli,$sql) or die;
 		break;
 }
 $row=array("a" => "1");

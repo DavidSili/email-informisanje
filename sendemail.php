@@ -2,6 +2,8 @@
 	date_default_timezone_set('Europe/Belgrade');
 
 include 'config.php';
+
+// u celoj verziji programa ova dva parametra dobija iz SESSION varijable
 $imeuser='Mika Mikić';
 $posaouser='komercijalista';
 ?>
@@ -39,8 +41,8 @@ $posaouser='komercijalista';
   <hr />
 </div>
 <div style="position:absolute;top:220px;left:8px;right:8px;bottom:8px;font-family:arial">
-    <div style="width:180px;height:100%;float:left;overflow:auto">
-        <div style="float:left;width:168px;height:100%;padding:0 5px">
+    <div style="width:195px;height:100%;float:left;overflow:auto">
+        <div style="float:left;width:178px;height:100%;padding:0 5px">
             <div>Ima viljuškare</div>
             <input type="hidden" name="ime" id="ime" value="<?php echo $imeuser;?>" />
             <input type="hidden" name="posao" id="posao" value="<?php echo $posaouser;?>" />
@@ -68,8 +70,8 @@ $posaouser='komercijalista';
                    			<option value="x">nedodeljen</option>
 <?php
 $sql="SELECT imeiprezime FROM users WHERE posao='komercijalista'";
-$result=mysql_query($sql);
-while($row=mysql_fetch_assoc($result)) {
+$result = mysqli_query($mysqli,$sql);
+while($row=$result->fetch_assoc()) {
 $imeiprezime=$row['imeiprezime'];
 echo "<option>$imeiprezime</option>";
 }
@@ -97,8 +99,8 @@ echo "<option>$imeiprezime</option>";
                    			<option value="x">nedodeljen</option>
 <?php
 $sql="SELECT imeiprezime FROM users WHERE posao='led'";
-$result=mysql_query($sql);
-while($row=mysql_fetch_assoc($result)) {
+$result=mysqli_query($mysqli,$sql);
+while($row=$result->fetch_assoc()) {
 $imeiprezime=$row['imeiprezime'];
 echo "<option>$imeiprezime</option>";
 }
@@ -126,8 +128,8 @@ echo "<option>$imeiprezime</option>";
 								<option value="x">nedodeljen</option>
 <?php
 $sql="SELECT imeiprezime FROM users WHERE posao='serviser'";
-$result=mysql_query($sql);
-while($row=mysql_fetch_assoc($result)) {
+$result=mysqli_query($mysqli,$sql);
+while($row=$result->fetch_assoc()) {
 $imeiprezime=$row['imeiprezime'];
 echo "<option>$imeiprezime</option>";
 }
@@ -166,7 +168,7 @@ echo "<option>$imeiprezime</option>";
             <div>Ukupno: <div id="ukupno" style="float:right;margin-right:15px"></div></div>
         </div>
     </div>
-    <div style="float:left;width:2px;height:100%;background:#aaa;margin-left:10px"></div>
+    <div style="float:left;width:2px;height:100%;background:#aaa;margin-left:0px"></div>
     <div id="rezultat" style="position:absolute;top:0;right:0;bottom:0;left:200px">
     </div>
 </div>

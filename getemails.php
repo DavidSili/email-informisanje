@@ -76,18 +76,18 @@ $datum7= date('Y-m-d',mktime(0, 0, 0, date("m")  , date("d")-1, date("Y")));
 	if ($servis==7) $sql.=" AND posserv<'$datum7'";
 	
 	$xsql=$sql;
-    $result=mysql_query($sql);
+    $result=mysqli_query($mysqli,$sql);
     $num=mysql_num_rows($result);
     $puta=ceil($num / $broj);
     for ($i = 1; $i <= $puta; $i++) {
-     	if ($i==1) $result=mysql_query($xsql.' LIMIT '.$broj);
+     	if ($i==1) $result=mysqli_query($mysqli,$xsql.' LIMIT '.$broj);
     	elseif ($i>1) {
     	$od=($i-1)*$broj+1;
-    	$result=mysql_query($xsql.' LIMIT '.$od.', '.$broj);
+    	$result=mysqli_query($mysqli,$xsql.' LIMIT '.$od.', '.$broj);
     	}
    	$teksta="";
    	$tekstb="";
-        while($row=mysql_fetch_assoc($result)) {
+        while($row=$result->fetch_assoc()) {
             $teksta.=$row['email'].', ';
             $tekstb.=$row['email'].'&#10;';
         }
